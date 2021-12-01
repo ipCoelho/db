@@ -16,6 +16,12 @@ select
     inner join tblfilmeator
     on tblfilme.idFilme = tblfilmeator.idFilme
     inner join tblator
-    on tblator.idAtor = tblfilmeator.idAtor;
+    on tblator.idAtor = tblfilmeator.idAtor
+    
+	where year(tblator.data_nascimento) >= 1965
+    
+    order by tblator.nome_artistico
+    
+;
     
 		
