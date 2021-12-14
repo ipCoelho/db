@@ -50,6 +50,7 @@ create procedure procListarFilmes(IN varIdgenero INT)
 BEGIN
 	declare sqlPrincipal text;
     declare sqlCriterioGenero text;
+    declare sqlCompleto text;
     
     set sqlPrincipal = "
 			tblfilme.nome as NomeDoFilme, 
@@ -64,7 +65,8 @@ BEGIN
 	if varIdgenero > 0 then
 		execute sqlPrincipal;
 	elseif varIdgenero = 0 then
-		execute concat(sqlPrincipal+sqlCriterioGenero);
+		set sqlCompleto = concat(sqlPrincipal,sqlCriterioGenero);
+		execute sqlCompleto;
 	end if;
 END $$
 
