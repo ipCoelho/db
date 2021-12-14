@@ -21,7 +21,11 @@ select
 	where year(tblator.data_nascimento) >= 1965
     
     order by tblator.nome_artistico
-    
 ;
+select * from tblator where year(tblator.data_nascimento) >= 1965;
+select tblfilme.nome as Filme, tblfilme.idFilme as FilmeID , tblator.nome as Ator, tblator.idator as AtorID from tblator, tblfilme;
+
+
+
     
 		
