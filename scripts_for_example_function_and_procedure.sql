@@ -47,30 +47,22 @@ drop function saudacao;
 
 DELIMITER $$
 create procedure procListarFilmes(IN varIdgenero INT)
-BEGIN
-	declare sqlPrincipal text;
-    declare sqlCriterioGenero text;
-    declare sqlCompleto text;
-    
-    set sqlPrincipal = "
-			tblfilme.nome as NomeDoFilme, 
-			tblfilme.data_lancamento as Lancamento, 
-			tblgenero.nome as Genero
+BEGIN          
+	set @comandoPrincipal := "select tblfilme.nome as Nome_do_Filme, tblfilme.data_lancamento as Lançamento, tblgenero.nome as Gênero
 			from tblfilme 
 			inner join tblfilmegenero on tblfilme.idfilme = tblfilmegenero.idFilme
-			inner join tblgenero on tblfilmegenero.idFilme_genero = tblgenero.idGenero"
-	;
-    set sqlCriterioGenero = "where tblgenero.idgenero = varIdgenero;";
-    
+			inner join tblgenero on tblfilmegenero.idFilme_genero = tblgenero.idGenero";
 	if varIdgenero > 0 then
-		execute sqlPrincipal;
-	elseif varIdgenero = 0 then
-		set sqlCompleto = concat(sqlPrincipal,sqlCriterioGenero);
-		execute sqlCompleto;
+		set @comando := concat(@comandoPrincipal, " where tblgenero.idgenero = ", varIdgenero);
+	else
+		set @comando := @comandoPrincipal;
 	end if;
+
+	prepare scriptSQL from @comando;
+	execute scriptSQL;
 END $$
 
-call procListarFilmes(0);
+call procListarFilmes(3);
 
 
 
